@@ -54,6 +54,7 @@ sudo apt install gcc
 
 banner "Check gcc is available"
 next
+echo "Result: ==========="
 gcc --version
 
 banner "Download golang distro (version 1.10.3):"
@@ -91,11 +92,13 @@ cd $USER_HOME_DIR
 
 banner "verify \$GOPATH available"
 next
+echo "Result: ==========="
 echo $GOPATH
 
 banner "Ensure 'go' command is available"
 echo "Expected result: 'go version go1.10.3 linux/amd64'"
 next
+echo "Result: ==========="
 go version
 
 banner "Download Ethereum sources (version 1.8.10)"
@@ -130,6 +133,7 @@ GOPATH=$USER_HOME_DIR/godev
 GOROOT=$USER_HOME_DIR/go
 "
 next
+echo "Result: ==========="
 geth version
 
 banner "Restart user session now - exit and login back"
