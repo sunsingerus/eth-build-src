@@ -82,7 +82,8 @@ tail -n5 $USER_HOME_DIR/.bashrc
 
 banner "Apply session ENV vars"
 next
-source $USER_HOME_DIR/.bashrc
+export GOPATH="$USER_HOME_DIR/godev"
+export PATH="$USER_HOME_DIR/go/bin:/home/user/godev/bin:$PATH"
 
 banner "Cd into $USER_HOME_DIR"
 next
@@ -131,5 +132,5 @@ GOROOT=$USER_HOME_DIR/go
 next
 geth version
 
-banner "Restart user session now"
+banner "Restart user session now - exit and login back"
 
