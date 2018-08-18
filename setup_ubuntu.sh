@@ -64,19 +64,23 @@ banner "Unpack golang:"
 next
 tar -zxvf go1.10.3.linux-amd64.tar.gz
 
-banner "Setup GOPATH env"
+banner "Setup GOPATH env - create dor structure $USER_HOME_DIR/godev"
 next
 mkdir -p $USER_HOME_DIR/godev/{bin,pkg,src}
-
-banner "Add $USER_HOME_DIR/go/bin path to \$PATH env"
-next
-echo "export PATH=\"$USER_HOME_DIR/go/bin:/home/user/godev/bin:\$PATH\"" >> $USER_HOME_DIR/.bashrc
 
 banner "Add $USER_HOME_DIR/godev path as \$GOPATH env"
 next
 echo "export GOPATH=\"$USER_HOME_DIR/godev\"" >> $USER_HOME_DIR/.bashrc
+echo "Result: ==========="
+tail -n5 $USER_HOME_DIR/.bashrc
 
-banner "Apply session"
+banner "Add $USER_HOME_DIR/go/bin path to \$PATH env"
+next
+echo "export PATH=\"$USER_HOME_DIR/go/bin:/home/user/godev/bin:\$PATH\"" >> $USER_HOME_DIR/.bashrc
+echo "Result: ==========="
+tail -n5 $USER_HOME_DIR/.bashrc
+
+banner "Apply session ENV vars"
 next
 source $USER_HOME_DIR/.bashrc
 
