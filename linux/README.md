@@ -15,9 +15,11 @@ echo "{
 
 geth --datadir /home/user/ethdatadir init /home/user/ethdatadir/genesis.json
 
-
+OPTIONAL
+[
 bootnode --genkey=/home/user/ethdatadir/boot.key
 bootnode --nodekey=/home/user/ethdatadir/boot.key --verbosity 15
+]
 
 enode://1450690e73974a87e5a45cfd201d8c8cec6a52aaa319c3bc2094711bb7bd6e84778c9148d70a9f4bd4b2a9be45ac2939e0b8f3a05ca1a0fb9a2599320f6b283d@[192.168.74.149]:30301
 
