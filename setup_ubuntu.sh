@@ -62,7 +62,7 @@ wget https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz
 
 banner "Unpack golang:"
 next
-tar -zxvf go1.10.3.linux-amd64.tar.gz
+tar -xvf go1.10.3.linux-amd64.tar.gz
 
 banner "Setup GOPATH env - create dor structure $USER_HOME_DIR/godev"
 next
@@ -108,7 +108,7 @@ mkdir -p /home/user/godev/src/github.com/ethereum
 
 banner "Unpack into sources dir"
 next
-tar -xf v1.8.10.tar.gz -C $USER_HOME_DIR/godev/src/github.com/ethereum
+tar -xvf v1.8.10.tar.gz -C $USER_HOME_DIR/godev/src/github.com/ethereum
 echo "And rename sources folder - it should be named as go-ethereum"
 mv $USER_HOME_DIR/godev/src/github.com/ethereum/go-ethereum-1.8.10 $USER_HOME_DIR/godev/src/github.com/ethereum/go-ethereum
 
