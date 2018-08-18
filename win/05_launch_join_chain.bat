@@ -1,1 +1,1 @@
-geth --datadir c:\ethdatadir --verbosity 6 --networkid 15 --bootnodes enode://1450690e73974a87e5a45cfd201d8c8cec6a52aaa319c3bc2094711bb7bd6e84778c9148d70a9f4bd4b2a9be45ac2939e0b8f3a05ca1a0fb9a2599320f6b283d@[192.168.74.149]:30301
+geth --datadir c:\ethdatadir --ethash.dagdir c:\ethdatadir\ethash --verbosity 3 --bootnodes enode://a335e49a47d7ec0dc2d64136291fe1bd65318452c90858dd89027affae2b4c297e14f43d4593ca4140f0bd24bb24f46739c41a6b4f5720f3f3c4a48337293f33@[192.168.74.149]:30303
