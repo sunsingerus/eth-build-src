@@ -1,0 +1,11 @@
+Disable the Firewall in Windows 10, 8, and 7
+
+Open Control Panel
+Select the System and Security link
+Choose Windows Firewall. ...
+
+On the left side of the "Windows Firewall" screen, select Turn Windows Firewall on or off.
+Select the bubble next to Turn off Windows Firewall (not recommended).
+
+!!!IMPORTANT!!!
+Repeat this for Local and External connections!
