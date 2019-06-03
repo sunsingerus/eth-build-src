@@ -1,6 +1,11 @@
 #!/bin/bash
 
-USER_HOME_DIR="/home/user"
+# Setup paths
+ROOT_DIR=~
+GOLANG_VERSION="1.10.3"
+GOPATH_DIR="${ROOT_DIR}/gocode"
+GOROOT_DIR="${ROOT_DIR}/go"
+ETH_VERSION="1.8.10"
 
 ##
 ## Display banner
@@ -42,7 +47,7 @@ function next()
 
 banner "Let's start"
 next
-cd $USER_HOME_DIR
+cd $ROOT_DIR
 
 banner "Install prerequisites:"
 next
@@ -57,38 +62,38 @@ next
 echo "Result: ==========="
 gcc --version
 
-banner "Download golang distro (version 1.10.3):"
+banner "Download golang distro (version ${GOLANG_VERSION}):"
 next
-wget https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz
+wget https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz
 
 banner "Unpack golang:"
 next
-tar -xvf go1.10.3.linux-amd64.tar.gz
+tar -xvf go${GOLANG_VERSION}.linux-amd64.tar.gz
 
-banner "Setup GOPATH env - create dor structure $USER_HOME_DIR/godev"
+banner "Setup GOPATH env - create dir structure ${GOPATH_DIR}"
 next
-mkdir -p $USER_HOME_DIR/godev/{bin,pkg,src}
+mkdir -p ${GOPATH_DIR}/{bin,pkg,src}
 
-banner "Add $USER_HOME_DIR/godev path as \$GOPATH env"
+banner "Add ${GOPATH_DIR} path as \$GOPATH env"
 next
-echo "export GOPATH=\"$USER_HOME_DIR/godev\"" >> $USER_HOME_DIR/.bashrc
+echo "export GOPATH=\"${GOPATH_DIR}\"" >> ~/.bashrc
 echo "Result: ==========="
-tail -n5 $USER_HOME_DIR/.bashrc
+tail -n5 ~/.bashrc
 
-banner "Add $USER_HOME_DIR/go/bin path to \$PATH env"
+banner "Add ${GOROOT_DIR}/bin path to \$PATH env"
 next
-echo "export PATH=\"$USER_HOME_DIR/go/bin:/home/user/godev/bin:\$PATH\"" >> $USER_HOME_DIR/.bashrc
+echo "export PATH=\"${GOROOT_DIR}/bin:${GOPATH_DIR}/bin:\$PATH\"" >> ~/.bashrc
 echo "Result: ==========="
-tail -n5 $USER_HOME_DIR/.bashrc
+tail -n5 ~/.bashrc
 
 banner "Apply session ENV vars"
 next
-export GOPATH="$USER_HOME_DIR/godev"
-export PATH="$USER_HOME_DIR/go/bin:/home/user/godev/bin:$PATH"
+export GOPATH="${GOPATH_DIR}"
+export PATH="${GOROOT_DIR}/bin:${GOPATH_DIR}/bin:$PATH"
 
-banner "Cd into $USER_HOME_DIR"
+banner "Cd into ${ROOT_DIR}"
 next
-cd $USER_HOME_DIR
+cd $ROOT_DIR
 
 banner "verify \$GOPATH available"
 next
@@ -96,41 +101,41 @@ echo "Result: ==========="
 echo $GOPATH
 
 banner "Ensure 'go' command is available"
-echo "Expected result: 'go version go1.10.3 linux/amd64'"
+echo "Expected result: 'go version go${GOLANG_VERSION} linux/amd64'"
 next
 echo "Result: ==========="
 go version
 
-banner "Download Ethereum sources (version 1.8.10)"
+banner "Download Ethereum sources (version ${ETH_VERSION})"
 next
-wget https://github.com/ethereum/go-ethereum/archive/v1.8.10.tar.gz
+wget https://github.com/ethereum/go-ethereum/archive/v${ETH_VERSION}.tar.gz
 
 banner "Prepare sources dir structure"
 next
-mkdir -p /home/user/godev/src/github.com/ethereum
+mkdir -p "${GOPATH_DIR}/src/github.com/ethereum"
 
 banner "Unpack into sources dir"
 next
-tar -xvf v1.8.10.tar.gz -C $USER_HOME_DIR/godev/src/github.com/ethereum
+tar -xvf v${ETH_VERSION}.tar.gz -C "${GOPATH_DIR}/src/github.com/ethereum"
 echo "And rename sources folder - it should be named as go-ethereum"
-mv $USER_HOME_DIR/godev/src/github.com/ethereum/go-ethereum-1.8.10 $USER_HOME_DIR/godev/src/github.com/ethereum/go-ethereum
+mv "${GOPATH_DIR}/src/github.com/ethereum/go-ethereum-${ETH_VERSION}" "${GOPATH_DIR}/src/github.com/ethereum/go-ethereum"
 
 banner "Build & install"
 next
-cd $USER_HOME_DIR/godev/src/github.com/ethereum/go-ethereum
+cd "${GOPATH_DIR}/src/github.com/ethereum/go-ethereum"
 go install -v ./cmd/...
 
 banner "Check geth available"
 echo "expected result:
 Geth
-Version: 1.8.10-stable
+Version: ${ETH_VERSION}-stable
 Architecture: amd64
 Protocol Versions: [63 62]
 Network Id: 1
-Go Version: go1.10.3
+Go Version: go${GOLANG_VERSION}
 Operating System: linux
-GOPATH=$USER_HOME_DIR/godev
-GOROOT=$USER_HOME_DIR/go
+GOPATH=${GOPATH_DIR}
+GOROOT=${GOROOT_DIR}
 "
 next
 echo "Result: ==========="
