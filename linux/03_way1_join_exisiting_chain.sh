@@ -12,8 +12,10 @@ source ./00_config.sh
 # enode://47667e59f7c9947af6246985b7dd8eb54410da92edb64d395a9ec7acd5665bf92ce0535f07618dc7dff4037b9f8a0000fbeaae7469465241ee367908229bff9c@[192.168.74.149]:30303
 BOOTNODE="enode://47667e59f7c9947af6246985b7dd8eb54410da92edb64d395a9ec7acd5665bf92ce0535f07618dc7dff4037b9f8a0000fbeaae7469465241ee367908229bff9c@[192.168.74.149]:30303"
 
-${GOPATH_DIR}/bin/geth \
+"${GOPATH_DIR}"/bin/geth \
 	--datadir "${ETHDATA_DIR}" \
 	--ethash.dagdir "${ETHDATA_DIR}"/ethash \
-	--verbosity 3 \
+	--verbosity "${VERBOSITY}" \
+	--networkid "${NETWORK_ID}" \
 	--bootnodes "${BOOTNODE}"
+

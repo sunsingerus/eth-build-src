@@ -12,7 +12,8 @@ ETHER_ADDRESS="0xacd70592d536334753a6a9cdbdfcd7e682935850"
 ${GOPATH_DIR}/bin/geth \
 	--datadir "${ETHDATA_DIR}" \
 	--ethash.dagdir "${ETHDATA_DIR}"/ethash \
-	--verbosity 3 \
+	--verbosity "${VERBOSITY}" \
+	--networkid "${NETWORK_ID}" \
 	--mine \
 	--minerthreads=1 \
 	--etherbase="${ETHER_ADDRESS}"

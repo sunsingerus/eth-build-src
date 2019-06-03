@@ -7,5 +7,5 @@ ${GOPATH_DIR}/bin/geth \
 	--ethash.dagdir "${ETHDATA_DIR}"/ethash \
 	--verbosity "${VERBOSITY}" \
 	--networkid "${NETWORK_ID}" \
-	attach
+	account list
 
