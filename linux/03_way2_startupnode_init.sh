@@ -7,3 +7,6 @@ ${GOPATH_DIR}/bin/geth \
 	--ethash.dagdir "${ETHDATA_DIR}"/ethash \
 	--verbosity 3 \
 	account new
+
+# As a result of this command would be
+# Address: {acd70592d536334753a6a9cdbdfcd7e682935850}

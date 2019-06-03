@@ -1,8 +1,18 @@
 #!/bin/bash
 
+# --bootnodes is an address reported by a node duriong start procedure
+# Ex.:
+# self=enode://47667e59f7c9947af6246985b7dd8eb54410da92edb64d395a9ec7acd5665bf92ce0535f07618dc7dff4037b9f8a0000fbeaae7469465241ee367908229bff9c@[::]:30303
+# Also this enode can be extracted with 04_local_node_view_enode.sh
+# But, those enodes has "::" as an IP address. which is correct for localhost only
+# It is more correct to specify IP in this address
+# Ex.:
+# enode://47667e59f7c9947af6246985b7dd8eb54410da92edb64d395a9ec7acd5665bf92ce0535f07618dc7dff4037b9f8a0000fbeaae7469465241ee367908229bff9c@[192.168.74.149]:30303
+BOOTNODE="enode://47667e59f7c9947af6246985b7dd8eb54410da92edb64d395a9ec7acd5665bf92ce0535f07618dc7dff4037b9f8a0000fbeaae7469465241ee367908229bff9c@[192.168.74.149]:30303"
+
 geth \
 	--datadir /home/user/ethdatadir \
 	--ethash.dagdir /home/user/ethdatadir/ethash \
 	--verbosity 3 \
-	--bootnodes enode://a335e49a47d7ec0dc2d64136291fe1bd65318452c90858dd89027affae2b4c297e14f43d4593ca4140f0bd24bb24f46739c41a6b4f5720f3f3c4a48337293f33@[192.168.74.149]:30303
+	--bootnodes "${BOOTNODE}"
 
