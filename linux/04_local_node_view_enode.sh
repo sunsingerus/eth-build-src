@@ -1,9 +1,10 @@
 #!/bin/bash
 
-geth \
-	--datadir /home/user/ethdatadir \
-	--ethash.dagdir /home/user/ethdatadir/ethash \
+source ./00_config.sh
+
+${GOPATH_DIR}/bin/geth \
+	--datadir "${ETHDATA_DIR}" \
+	--ethash.dagdir "${ETHDATA_DIR}"/ethash \
 	--verbosity 3 \
 	--exec "admin.nodeInfo.enode" \
 	attach
-

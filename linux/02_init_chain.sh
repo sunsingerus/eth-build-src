@@ -1,8 +1,8 @@
 #!/bin/bash
 
-ETHDATADIR=~/ethdatadir
+source ./00_config.sh
 
-mkdir -p "${ETHDATADIR}"
-cp ./genesis.json "${ETHDATADIR}"
-geth --datadir "${ETHDATADIR}" init "${ETHDATADIR}/genesis.json"
+mkdir -p "${ETHDATA_DIR}"
+cp ./genesis.json "${ETHDATA_DIR}"
+${GOPATH_DIR}/bin/geth --datadir "${ETHDATA_DIR}" init "${ETHDATA_DIR}/genesis.json"
 
