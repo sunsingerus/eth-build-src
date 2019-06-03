@@ -7,7 +7,7 @@ source ./00_config.sh
 # Passphrase:
 # Repeat passphrase:
 # Address: {acd70592d536334753a6a9cdbdfcd7e682935850}
-ETHER_ADDRESS="0xacd70592d536334753a6a9cdbdfcd7e682935850"
+ETHER_ADDRESS="0x0dd3e3b80ddbe034845e3aacc7a880836b2b3045"
 
 ${GOPATH_DIR}/bin/geth \
 	--datadir "${ETHDATA_DIR}" \
