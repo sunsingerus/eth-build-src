@@ -7,6 +7,8 @@ source ./00_config.sh
 ${GOPATH_DIR}/bin/swarm --bzzaccount "${ACCOUNT}"
 # When running, swarm is accessible through an HTTP API on port 8500
 
+# https://swarm-guide.readthedocs.io/en/latest/up-and-download.html
+
 #If you don’t want your swarm node to connect to any existing networks, 
 #you can provide it with a custom network identifier using --bzznetworkid with a random large number.
 
