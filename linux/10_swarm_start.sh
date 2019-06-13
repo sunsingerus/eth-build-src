@@ -3,8 +3,14 @@
 source ./00_config.sh
 
 # o start Swarm you need an Ethereum account. You can create a new account in `geth`
-${GOPATH_DIR}/bin/geth account new
+${GOPATH_DIR}/bin/geth \
+	--datadir "${ETHER_DATA_DIR}" \
+	account new
 
+# Return like:
+# Address: {39f3a6c1de996f4ca247872d6ea296d16a5d77ea}
+
+# Run `swarm` with connect to exsting netqorks
 #$ swarm --bzzaccount <your-account-here>
 #${GOPATH_DIR}/bin/swarm --bzzaccount 2f1cd699b0bf461dcfbf0098ad8f5587b038f0f1
 ${GOPATH_DIR}/bin/swarm --bzzaccount "${ACCOUNT}"
@@ -18,20 +24,20 @@ ${GOPATH_DIR}/bin/swarm --bzzaccount "${ACCOUNT}"
 ${GOPATH_DIR}/bin/swarm \
 	--bzzaccount "${ACCOUNT}" \
 	--datadir "${SWARM_DATA_DIR}" \
-	--ens-api "${SWARM_DATA_DIR}/geth.ipc" \
 	--bzznetworkid "${SWARM_NETWORK_ID}"
 
 #By default, swarm will automatically seek out peers in the network. This can be suppressed using the --nodiscover flag:
-${GOPATH_DIR}/bin/swarm \
-	--bzzaccount "${ACCOUNT}" \
-	--datadir "${SWARM_DATA_DIR}" \
-	--ens-api "${SWARM_DATA_DIR}/geth.ipc" \
-	--bzznetworkid "${SWARM_NETWORK_ID}"
-	--nodiscover
+# DOES NOW WORK!!!!
+#${GOPATH_DIR}/bin/swarm \
+#	--bzzaccount "${ACCOUNT}" \
+#	--datadir "${SWARM_DATA_DIR}" \
+#	--ens-api "${SWARM_DATA_DIR}/geth.ipc" \
+#	--bzznetworkid "${SWARM_NETWORK_ID}"
+#	--nodiscover
 
 # In separate shell we can connect to swarm with `geth` console.
 # Swarm is fully compatible with Geth Console commands
-${GOPATH_DIR}/bin/geth attach "${SWARMN_DATA_DIR}/bzzd.ipc"
+${GOPATH_DIR}/bin/geth attach "${SWARM_DATA_DIR}/bzzd.ipc"
 
 #Without discovery, it is possible to manually start off the connection process by adding one or more peers using the admin.addPeer console command.
 #geth --exec='admin.addPeer("ENODE")' attach $HOME/.ethereum/bzzd.ipc
@@ -43,10 +49,10 @@ ${GOPATH_DIR}/bin/geth attach "${SWARMN_DATA_DIR}/bzzd.ipc"
 #
 
 # To upload some data:
-curl -H "Content-Type: text/plain" --data "some-data" http://localhost:8500/bzz:/
+HASH=$(curl -H "Content-Type: text/plain" --data "some-data" http://localhost:8500/bzz:/); echo $HASH
 
 # Download
-#curl http://localhost:8500/bzz:/027e57bcbae76c4b6a1c5ce589be41232498f1af86e1b1a2fc2bdffd740e9b39/
+curl "http://localhost:8500/bzz:/${HASH}/"
 
 #
 # Complex dir structure upload with Manifest
@@ -71,6 +77,8 @@ curl http://localhost:8500/bzz:/1e0e21894d731271e50ea2cecf60801fdc8d0b23ae33b9e8
 curl -s -H "Accept: application/x-tar" http://localhost:8500/bzz:/ccef599d1a13bed9989e424011aed2c023fce25917864cd7de38a761567410b8/ | tar t
 # dir1/file.txt
 # dir2/file.txt
+
+sudo apt install jq
 
 # LIST files
 curl -s http://localhost:8500/bzz-list:/ccef599d1a13bed9989e424011aed2c023fce25917864cd7de38a761567410b8/ | jq .
@@ -99,19 +107,20 @@ curl -s http://localhost:8500/bzz-list:/ccef599d1a13bed9989e424011aed2c023fce259
 # Communicate via CLI
 #
 
-${GOPATH_DIR}/bin/swarm up example.md
+HASH=$("${GOPATH_DIR}/bin/swarm" up README.md)
 # d1f25a870a7bb7e5d526a7623338e4e9b8399e76df8b634020d11d969594f24a
 
-${GOPATH_DIR}/bin/swarm down bzz:/<hash>            #downloads the file at <hash> to the current working directory
-${GOPATH_DIR}/bin/swarm down bzz:/<hash> file.tmp   #downloads the file at <hash> as ``file.tmp`` in the current working dir
-${GOPATH_DIR}/bin/swarm down bzz:/<hash> dir1/      #downloads the file at <hash> to ``dir1/``
+${GOPATH_DIR}/bin/swarm down "bzz:/${HASH}"            #downloads the file at <hash> to the current working directory
+${GOPATH_DIR}/bin/swarm down "bzz:/${HASH}" file.tmp   #downloads the file at <hash> as ``file.tmp`` in the current working dir
+${GOPATH_DIR}/bin/swarm down "bzz:/${HASH}" dir1/      #downloads the file at <hash> to ``dir1/``
 
 #You can also specify a custom proxy with –bzzapi:
-${GOPATH_DIR}/bin/swarm --bzzapi http://localhost:8500 down bzz:/<hash>            #downloads the file at <hash> to the current working directory using the localhost node
+${GOPATH_DIR}/bin/swarm --bzzapi "http://localhost:8500" down "bzz:/${HASH}"            #downloads the file at <hash> to the current working directory using the localhost node
 
+${GOPATH_DIR}/bin/swarm ls "${HASH}"
 
 #Uploading directories is achieved with the --recursive flag.
-${GOPATH_DIR}/bin/swarm --recursive up /path/to/directory
+HASH=$("${GOPATH_DIR}/bin/swarm" --recursive up ~/eth-build-src)
 # ab90f84c912915c2a300a94ec5bef6fc0747d1fbaf86d769b3eed1c836733a30
 #The returned hash refers to a root manifest referencing all the files in the directory.
 
@@ -120,23 +129,35 @@ ${GOPATH_DIR}/bin/swarm --recursive up /path/to/directory
 # The FUSE commands attach to the running node through bzzd.ipc
 sudo apt-get install fuse
 sudo modprobe fuse
-sudo chown user:user /etc/fuse.conf
-sudo chown user:user /dev/fuse
+#sudo chown user:user /etc/fuse.conf
+#sudo chown user:user /dev/fuse
 
 
 # To mount a Swarm resource, first upload some content to Swarm using the `swarm up <resource>` command. 
 # You can also upload a complete folder using `swarm --recursive up <directory>`. 
 # Once you get the returned manifest hash, use it to mount the manifest to a mount point (the mount point should exist on your hard drive):
-swarm fs mount <manifest-hash> <mount-point>
+# swarm fs mount <manifest-hash> <mount-point>
+
+MOUNTPOINT=~/fusemountpoint
+HASH="0a232e1a239f495b8ecec73d1bc15269060bdd9e593f1f82fc87c0fb6780096b"
+mkdir -p "${MOUNTPOINT}"
+${GOPATH_DIR}/bin/swarm \
+        --datadir "${SWARM_DATA_DIR}" \
+	fs mount "${HASH}" "${MOUNTPOINT}"
+
 # $ swarm fs mount <manifest-hash> /home/user/swarmmount
 
 # To unmount a swarmfs mount, either use the List Mounts command below, or use a known mount point:
-$ swarm fs unmount <mount-point>
+${GOPATH_DIR}/bin/swarm \
+        --datadir "${SWARM_DATA_DIR}" \
+	fs unmount "${MOUNTPOINT}"
 
 # IMPORTANT!
 # The returned hash is the latest manifest version that was mounted.
 # You can use this hash to remount the latest version with the most recent changes.
 
 # To see all existing swarmfs mount points, use the List Mounts command:
-$ swarm fs list
+${GOPATH_DIR}/bin/swarm \
+        --datadir "${SWARM_DATA_DIR}" \
+	fs list
 

@@ -20,8 +20,8 @@ GOPATH_DIR="${ROOT_DIR}/gocode"
 GOROOT_DIR="${ROOT_DIR}/go"
 
 # Ethereum and Swarm paths
-ETHER_DATA_DIR=~/ethdatadir
-SWARM_DATA_DIR=~/ethswardir
+ETHER_DATA_DIR=~/ethereum_data
+SWARM_DATA_DIR="${ETHER_DATA_DIR}"
 
 #
 # Ethereum options
