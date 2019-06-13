@@ -117,6 +117,7 @@ ${GOPATH_DIR}/bin/swarm down "bzz:/${HASH}" dir1/      #downloads the file at <h
 #You can also specify a custom proxy with –bzzapi:
 ${GOPATH_DIR}/bin/swarm --bzzapi "http://localhost:8500" down "bzz:/${HASH}"            #downloads the file at <hash> to the current working directory using the localhost node
 
+# List hash content
 ${GOPATH_DIR}/bin/swarm ls "${HASH}"
 
 #Uploading directories is achieved with the --recursive flag.
