@@ -2,6 +2,9 @@
 
 source ./00_config.sh
 
+# o start Swarm you need an Ethereum account. You can create a new account in `geth`
+${GOPATH_DIR}/bin/geth account new
+
 #$ swarm --bzzaccount <your-account-here>
 #${GOPATH_DIR}/bin/swarm --bzzaccount 2f1cd699b0bf461dcfbf0098ad8f5587b038f0f1
 ${GOPATH_DIR}/bin/swarm --bzzaccount "${ACCOUNT}"
@@ -25,6 +28,10 @@ ${GOPATH_DIR}/bin/swarm \
 	--ens-api "${SWARM_DATA_DIR}/geth.ipc" \
 	--bzznetworkid "${SWARM_NETWORK_ID}"
 	--nodiscover
+
+# In separate shell we can connect to swarm with `geth` console.
+# Swarm is fully compatible with Geth Console commands
+${GOPATH_DIR}/bin/geth attach "${SWARMN_DATA_DIR}/bzzd.ipc"
 
 #Without discovery, it is possible to manually start off the connection process by adding one or more peers using the admin.addPeer console command.
 #geth --exec='admin.addPeer("ENODE")' attach $HOME/.ethereum/bzzd.ipc
@@ -107,4 +114,29 @@ ${GOPATH_DIR}/bin/swarm --bzzapi http://localhost:8500 down bzz:/<hash>         
 ${GOPATH_DIR}/bin/swarm --recursive up /path/to/directory
 # ab90f84c912915c2a300a94ec5bef6fc0747d1fbaf86d769b3eed1c836733a30
 #The returned hash refers to a root manifest referencing all the files in the directory.
+
+# FUSE
+# When using FUSE from the CLI, we assume you are running a local Swarm node on your machine. 
+# The FUSE commands attach to the running node through bzzd.ipc
+sudo apt-get install fuse
+sudo modprobe fuse
+sudo chown user:user /etc/fuse.conf
+sudo chown user:user /dev/fuse
+
+
+# To mount a Swarm resource, first upload some content to Swarm using the `swarm up <resource>` command. 
+# You can also upload a complete folder using `swarm --recursive up <directory>`. 
+# Once you get the returned manifest hash, use it to mount the manifest to a mount point (the mount point should exist on your hard drive):
+swarm fs mount <manifest-hash> <mount-point>
+# $ swarm fs mount <manifest-hash> /home/user/swarmmount
+
+# To unmount a swarmfs mount, either use the List Mounts command below, or use a known mount point:
+$ swarm fs unmount <mount-point>
+
+# IMPORTANT!
+# The returned hash is the latest manifest version that was mounted.
+# You can use this hash to remount the latest version with the most recent changes.
+
+# To see all existing swarmfs mount points, use the List Mounts command:
+$ swarm fs list
 
