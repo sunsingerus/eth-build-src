@@ -12,14 +12,14 @@ ${GOPATH_DIR}/bin/swarm --bzzaccount "${ACCOUNT}"
 #If you don’t want your swarm node to connect to any existing networks, 
 #you can provide it with a custom network identifier using --bzznetworkid with a random large number.
 
-swarm \
+${GOPATH_DIR}/bin/swarm \
 	--bzzaccount "${ACCOUNT}" \
 	--datadir "${SWARM_DATA_DIR}" \
 	--ens-api "${SWARM_DATA_DIR}/geth.ipc" \
 	--bzznetworkid "${SWARM_NETWORK_ID}"
 
 #By default, swarm will automatically seek out peers in the network. This can be suppressed using the --nodiscover flag:
-swarm \
+${GOPATH_DIR}/bin/swarm \
 	--bzzaccount "${ACCOUNT}" \
 	--datadir "${SWARM_DATA_DIR}" \
 	--ens-api "${SWARM_DATA_DIR}/geth.ipc" \
@@ -56,18 +56,18 @@ tar cf files.tar .
 #upload the tar archive to Swarm to create a manifest
 curl -H "Content-Type: application/x-tar" --data-binary @files.tar http://localhost:8500/bzz:/
 
-#> 1e0e21894d731271e50ea2cecf60801fdc8d0b23ae33b9e808e5789346e3355e
+# 1e0e21894d731271e50ea2cecf60801fdc8d0b23ae33b9e808e5789346e3355e
 
 curl http://localhost:8500/bzz:/1e0e21894d731271e50ea2cecf60801fdc8d0b23ae33b9e808e5789346e3355e/dir1/file.txt
-#> some-data
+# some-data
 
 curl -s -H "Accept: application/x-tar" http://localhost:8500/bzz:/ccef599d1a13bed9989e424011aed2c023fce25917864cd7de38a761567410b8/ | tar t
-#> dir1/file.txt
-#  dir2/file.txt
+# dir1/file.txt
+# dir2/file.txt
 
 # LIST files
 curl -s http://localhost:8500/bzz-list:/ccef599d1a13bed9989e424011aed2c023fce25917864cd7de38a761567410b8/ | jq .
-#> {
+# {
 #   "common_prefixes": [
 #     "dir1/",
 #     "dir2/",
@@ -76,7 +76,7 @@ curl -s http://localhost:8500/bzz-list:/ccef599d1a13bed9989e424011aed2c023fce259
 # }
 
 curl -s http://localhost:8500/bzz-list:/ccef599d1a13bed9989e424011aed2c023fce25917864cd7de38a761567410b8/dir1/ | jq .
-#> {
+# {
 #  "entries": [
 #    {
 #      "path": "dir1/file.txt",
@@ -86,25 +86,25 @@ curl -s http://localhost:8500/bzz-list:/ccef599d1a13bed9989e424011aed2c023fce259
 #      "hash": "94f78a45c7897957809544aa6d68aa7ad35df695713895953b885aca274bd955"
 #    }
 #  ]
-#}
+# }
 
 #
 # Communicate via CLI
 #
 
-swarm up example.md
-#> d1f25a870a7bb7e5d526a7623338e4e9b8399e76df8b634020d11d969594f24a
+${GOPATH_DIR}/bin/swarm up example.md
+# d1f25a870a7bb7e5d526a7623338e4e9b8399e76df8b634020d11d969594f24a
 
-swarm down bzz:/<hash>            #downloads the file at <hash> to the current working directory
-swarm down bzz:/<hash> file.tmp   #downloads the file at <hash> as ``file.tmp`` in the current working dir
-swarm down bzz:/<hash> dir1/      #downloads the file at <hash> to ``dir1/``
+${GOPATH_DIR}/bin/swarm down bzz:/<hash>            #downloads the file at <hash> to the current working directory
+${GOPATH_DIR}/bin/swarm down bzz:/<hash> file.tmp   #downloads the file at <hash> as ``file.tmp`` in the current working dir
+${GOPATH_DIR}/bin/swarm down bzz:/<hash> dir1/      #downloads the file at <hash> to ``dir1/``
 
 #You can also specify a custom proxy with –bzzapi:
-swarm --bzzapi http://localhost:8500 down bzz:/<hash>            #downloads the file at <hash> to the current working directory using the localhost node
+${GOPATH_DIR}/bin/swarm --bzzapi http://localhost:8500 down bzz:/<hash>            #downloads the file at <hash> to the current working directory using the localhost node
 
 
 #Uploading directories is achieved with the --recursive flag.
-swarm --recursive up /path/to/directory
-#> ab90f84c912915c2a300a94ec5bef6fc0747d1fbaf86d769b3eed1c836733a30
+${GOPATH_DIR}/bin/swarm --recursive up /path/to/directory
+# ab90f84c912915c2a300a94ec5bef6fc0747d1fbaf86d769b3eed1c836733a30
 #The returned hash refers to a root manifest referencing all the files in the directory.
 
