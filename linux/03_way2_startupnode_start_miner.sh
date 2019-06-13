@@ -10,10 +10,10 @@ source ./00_config.sh
 ETHER_ADDRESS="0x0dd3e3b80ddbe034845e3aacc7a880836b2b3045"
 
 ${GOPATH_DIR}/bin/geth \
-	--datadir "${ETHDATA_DIR}" \
-	--ethash.dagdir "${ETHDATA_DIR}"/ethash \
+	--datadir "${ETHER_DATA_DIR}" \
+	--ethash.dagdir "${ETHER_DATA_DIR}"/ethash \
 	--verbosity "${VERBOSITY}" \
-	--networkid "${NETWORK_ID}" \
+	--networkid "${ETHER_NETWORK_ID}" \
 	--mine \
 	--minerthreads=1 \
 	--etherbase="${ETHER_ADDRESS}"

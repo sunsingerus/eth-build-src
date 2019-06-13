@@ -101,9 +101,9 @@ next
 echo "Result: ==========="
 go version
 
-banner "Download Ethereum sources (version ${ETH_VERSION})"
+banner "Download Ethereum sources (version ${ETHER_VERSION})"
 next
-wget https://github.com/ethereum/go-ethereum/archive/v${ETH_VERSION}.tar.gz
+wget https://github.com/ethereum/go-ethereum/archive/v${ETHER_VERSION}.tar.gz
 
 banner "Prepare sources dir structure"
 next
@@ -111,9 +111,9 @@ mkdir -p "${GOPATH_DIR}/src/github.com/ethereum"
 
 banner "Unpack into sources dir"
 next
-tar -xvf v${ETH_VERSION}.tar.gz -C "${GOPATH_DIR}/src/github.com/ethereum"
+tar -xvf v${ETHER_VERSION}.tar.gz -C "${GOPATH_DIR}/src/github.com/ethereum"
 echo "And rename sources folder - it should be named as go-ethereum"
-mv "${GOPATH_DIR}/src/github.com/ethereum/go-ethereum-${ETH_VERSION}" "${GOPATH_DIR}/src/github.com/ethereum/go-ethereum"
+mv "${GOPATH_DIR}/src/github.com/ethereum/go-ethereum-${ETHER_VERSION}" "${GOPATH_DIR}/src/github.com/ethereum/go-ethereum"
 
 banner "Build & install"
 next
@@ -123,7 +123,7 @@ go install -v ./cmd/...
 banner "Check geth available"
 echo "expected result:
 Geth
-Version: ${ETH_VERSION}-stable
+Version: ${ETHER_VERSION}-stable
 Architecture: amd64
 Protocol Versions: [63 62]
 Network Id: 1
