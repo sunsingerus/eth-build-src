@@ -7,7 +7,17 @@ source ./00_config.sh
 # Passphrase:
 # Repeat passphrase:
 # Address: {acd70592d536334753a6a9cdbdfcd7e682935850}
-ETHER_ADDRESS="0x0dd3e3b80ddbe034845e3aacc7a880836b2b3045"
+#ETHER_ADDRESS="0x0dd3e3b80ddbe034845e3aacc7a880836b2b3045"
+#ETHER_ADDRESS="f8adba1f59e170f410fe43f75f97d2e943c774a5"
+
+ETHER_ADDRESS=${ETHER_ADDRESS:-$(cat ./ether_address)}
+
+if [[ -z ${ETHER_ADDRESS} ]]; then
+	echo "Specify ether address, pelase. Can not continue"
+	exit 1
+fi
+
+echo "Starting with address: ${ETHER_ADDRESS}"
 
 ${GOPATH_DIR}/bin/geth \
 	--datadir "${ETHER_DATA_DIR}" \
