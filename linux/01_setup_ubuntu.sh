@@ -46,11 +46,11 @@ cd $ROOT_DIR
 
 banner "Install prerequisites:"
 next
-sudo apt install git wget
+sudo apt install -y git wget
 
 banner "Install gcc (tested with gcc 5.4)"
 next
-sudo apt install gcc
+sudo apt install -y gcc
 
 banner "Check gcc is available"
 next
@@ -67,7 +67,7 @@ tar -xvf go${GOLANG_VERSION}.linux-amd64.tar.gz
 
 banner "Setup GOPATH env - create dir structure ${GOPATH_DIR}"
 next
-mkdir -p ${GOPATH_DIR}/{bin,pkg,src}
+mkdir -p "${GOPATH_DIR}"/{bin,pkg,src}
 
 banner "Add ${GOPATH_DIR} path as \$GOPATH env"
 next
