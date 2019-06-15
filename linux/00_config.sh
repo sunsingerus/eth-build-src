@@ -10,6 +10,8 @@ GOLANG_VERSION="1.11.10"
 #ETHER_VERSION="1.8.27"
 ETHER_VERSION="1.8.26"
 
+# git checkout "v${ETHER_VERSION}"
+
 #
 # Setup paths
 #
