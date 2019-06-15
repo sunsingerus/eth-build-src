@@ -19,5 +19,7 @@ cat <<EOF > "${ETHER_DATA_DIR}/genesis.json"
 }
 EOF
 
-"${GOPATH_DIR}"/bin/geth --datadir "${ETHER_DATA_DIR}" init "${ETHER_DATA_DIR}/genesis.json"
+"${GOPATH_DIR}"/bin/geth \
+	--datadir "${ETHER_DATA_DIR}" \
+	init "${ETHER_DATA_DIR}/genesis.json"
 
