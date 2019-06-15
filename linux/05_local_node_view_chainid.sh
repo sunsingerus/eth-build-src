@@ -7,6 +7,6 @@ source ./00_config.sh
 	--ethash.dagdir "${ETHER_DATA_DIR}"/ethash \
 	--verbosity "${VERBOSITY}" \
 	--networkid "${ETHER_NETWORK_ID}" \
-	--exec "admin.nodeInfo.enode" \
+	--exec 'admin.nodeInfo.protocols.eth.network' \
 	attach
 

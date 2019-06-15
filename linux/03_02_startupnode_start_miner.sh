@@ -12,14 +12,14 @@ source ./00_config.sh
 
 ETHER_ADDRESS=${ETHER_ADDRESS:-$(cat ./ether_address)}
 
-if [[ -z ${ETHER_ADDRESS} ]]; then
-	echo "Specify ether address, pelase. Can not continue"
+if [[ -z "${ETHER_ADDRESS}" ]]; then
+	echo "Specify ether address, please. Can not continue"
 	exit 1
 fi
 
 echo "Starting with address: ${ETHER_ADDRESS}"
 
-${GOPATH_DIR}/bin/geth \
+"${GOPATH_DIR}/bin/geth" \
 	--datadir "${ETHER_DATA_DIR}" \
 	--ethash.dagdir "${ETHER_DATA_DIR}"/ethash \
 	--verbosity "${VERBOSITY}" \
